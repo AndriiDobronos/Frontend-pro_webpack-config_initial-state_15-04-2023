@@ -1,0 +1,10 @@
+.article {
+  border: 1px solid;
+  padding: 10px 30px;
+  width: 250px;
+}
+.article-list {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}

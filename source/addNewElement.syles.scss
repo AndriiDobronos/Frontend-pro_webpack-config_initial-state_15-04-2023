@@ -1,0 +1,15 @@
+.add-element-form {
+  padding: 20px;
+  label {
+    width: 150px;
+    display: inline-block;
+  }
+  input , textarea {
+    width: 190px;
+    resize: none;
+  }
+  button {
+    width: 100px;
+    margin-right: 30px;
+  }
+}
