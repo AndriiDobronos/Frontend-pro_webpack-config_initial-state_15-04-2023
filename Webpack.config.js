@@ -21,7 +21,7 @@ module.exports = {
         }),
         new CopyPlugin({
             patterns: [
-                { from: "source/img", to: "distImg" },
+                { from: "static", to: "static" },
             ],
         }),
     ],
@@ -61,7 +61,15 @@ module.exports = {
                         },
                     },
                 ]
-            }
+            },
+            {
+                test:/\.(png|svg|jpg|jpeg|gif)$/i,
+                type:'asset/resource',
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: 'asset/resource',
+            },
         ]
     }
 };

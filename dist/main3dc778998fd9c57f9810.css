@@ -1,0 +1,48 @@
+/*!****************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./source/index.scss ***!
+  \****************************************************************************************************************************************/
+html {
+  font-size: 24px;
+}
+
+h1 {
+  font-size: 30px;
+}
+/*!*********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./source/app.styles.scss ***!
+  \*********************************************************************************************************************************************/
+.article {
+  border: 1px solid;
+  padding: 10px 30px;
+  width: 250px;
+}
+
+.article-list {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+/*!******************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./source/addNewElement.syles.scss ***!
+  \******************************************************************************************************************************************************/
+.add-element-form {
+  padding: 20px;
+}
+.add-element-form label {
+  width: 150px;
+  display: inline-block;
+}
+.add-element-form input, .add-element-form textarea {
+  width: 190px;
+  resize: none;
+}
+.add-element-form button {
+  width: 100px;
+  margin-right: 30px;
+}
+/*!***********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./source/slider.style.scss ***!
+  \***********************************************************************************************************************************************/
+.slider {
+  background-image: url(/4af2c403515583ec3ae6.jpg);
+}

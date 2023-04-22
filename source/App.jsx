@@ -1,9 +1,22 @@
-import React from 'react'
-import Header from './Header.jsx'
+import React, {useState} from 'react'
 import './app.styles.scss'
-import ArticleList from './ArticleList.jsx';
+import Header from './Header.jsx'
+import ArticleList from './ArticleList-copy.jsx';
 import ErrorBoundary from './ErrorBoundary.jsx';
-import ElementsList from "./ElementsList.jsx";
+import ElementsList from "./ElementsList-copy.jsx";
+import ChooseLanguage from "./ChooseLanguage.jsx";
+import Slider from "./Slider.jsx";
+import MyCarousel from "./MyCarousel.jsx";
+import LanguageContext from "./Context.jsx";
+import uaTexts from "./uaTexts.jsx";
+import enTexts from "./enTexts.jsx";
+import itTexts from "./itTexts.jsx";
+import Home from "./Home.jsx";
+import ListPage from "./ListPage.jsx";
+import ImagePage from "./ImagePage.jsx";
+import {Route, Routes, NavLink} from "react-router-dom";
+import ElementType from "./ElementType.js";
+import ListItem from "./ListItem.jsx";
 
 const articles = [
     {id: 'erwet', name: 'Laptop', amount: 7},
@@ -11,6 +24,7 @@ const articles = [
     {id: 'zxcvv', name: 'Headset', amount: 3},
     {id: 'rtyu', name: 'Microphone', amount: 5}
 ]
+
 /*
 let showList = 'block'
 const collectionStyle  = {margin: '5px 10px', background:'lightgreen',display: showList ? '':'none'}
@@ -34,49 +48,29 @@ export default ({headerText}) => {
     </div>
 }
  */
+
 export default class App extends React.Component{
     static defaultProps = {
-        headerText: ''
+        headerText: '',
+
     }
     constructor(props) {
         super(props)
         this.state = {
             isListShown: true,
-            style: {margin: '5px 10px', background:'lightgreen'},
+            style: {margin: '5px 10px', background: `lightgreen`},
             phrase: 'Empty field',
             counter:  props.initialCounter || 0,
-            color: 555555
+            color: 555555,
+            language:'ua',
+            elements: [
+                {id: '1', name: 'Powerbank', description: 'Cool!', price: '2000 uah', isAvailable: true, type: ElementType.tech},
+                {id: '2', name: 'Pen', description: 'Write all your ideas', price:'30 uah',isAvailable: true, type: ElementType.stationery},
+                {id: '3', name: 'Pencil', description:'Also cool', price:"25 uah", isAvailable: false, type: ElementType.stationery}
+            ]
         }
     }
-    onToggleClick = () => {
-        const isListShown = !this.state.isListShown
-        this.setState({
-            isListShown
-        })
 
-    }
-    decrement = () => {
-        let {counter} = this.state
-        counter--
-        this.setState({
-            counter
-        })
-    }
-    increment = () => {
-        let {counter} = this.state
-        counter++
-        this.setState({
-            counter
-        })
-    }
-    multipleStateUpdate = () => {
-        for (let index = 0;index < 4; index++) {
-            this.setState((previousState) => {
-//                const updateState = Object.assign({},previousState, {counter: previousState.counter + 1 })
-                return {counter: previousState.counter + 1}
-            })
-        }
-    }
     componentDidMount() {
         // component вмонтировался можно с ним что-то делать
     }
@@ -101,28 +95,47 @@ export default class App extends React.Component{
             color
         })
     }
+    onLanguageChange = (event) => {
+         this.setState({language:event.target.value})
+    }
 
     render() {
         const {headerText} = this.props
-        return  <div className='' style={{display: ''}} >
-            {headerText && <Header className="header" headerText={headerText}/>}
-            <p>The  first react app</p>
-            {headerText?.length > 10 ? <p>Long text</p> : <p>Short text</p>}
-            {headerText?.length > 0 && <p>Has some text</p>}
-            <div style={{display:'flex',gap:'10px',padding:'10px'}}>
-                <button onClick={this.decrement}>-</button>
-                <span>{this.state.counter}</span>
-                <button onClick={this.increment}>+</button>
-                <button onClick={this.multipleStateUpdate}>++</button>
-            </div>
-            <button className='btn' onClick = {this.onToggleClick}> Toggle list</button>
-            <div style={{display: this.state.isListShown? 'none': ''}}><h1>{this.state.phrase}</h1></div>
-            {this.state.isListShown && <ErrorBoundary><ArticleList style={this.state.style} articles={articles} /></ErrorBoundary>}
-            <ElementsList />
-
+        let texts
+        switch (this.state.language) {
+            case 'ua':
+                texts = uaTexts
+                break;
+            case 'en':
+                texts = enTexts
+                break;
+            case 'it':
+                texts = itTexts
+                break;
+            default:
+                throw new Error(this.state.language +" is unhandled")
+        }
+        return   <LanguageContext.Provider value={texts} >
+            <select value={this.state.language} onChange={this.onLanguageChange} >
+                <option value="ua">Українська</option>
+                <option value="en">English</option>
+                <option value="it">Italiano</option>
+            </select>
+            <nav className="nav-menu">
+                <NavLink to="/">Home</NavLink>
+                <NavLink to="/items">Items</NavLink>
+                <NavLink to="/images">Images</NavLink>
+            </nav>
+            <Routes>
+                <Route path="/" element={<Home headerText={headerText}/>}/>
+                <Route path="/items" element={<ListPage elements={this.state.elements} setElements={elements => this.setState({elements})}/>}/>
+                <Route path="/images" element={<ImagePage />}/>
+                <Route path="/item/:itemId" element={<ListItem elements={this.state.elements}/>}/>
+                <Route path="*" element={<h1>Page not found</h1>}/>
+            </Routes>
+            <div style={{background: `#${this.state.color}`, height:'100px',width:'200px'}} ></div>
             <button onClick={this.ix}>color+</button>
             <button onClick={this.ixi}>color-</button>
-        </div>
-
+        </LanguageContext.Provider>
     }
 }

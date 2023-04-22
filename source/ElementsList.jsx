@@ -13,10 +13,21 @@ export default class ElementsList extends React.Component {
         ], //{id, name, description, price, isAvailable, type}
         isAddMode: false,
         isItemViewMode: false,
-        activeElementId: null,
         isEditMode: false,
-        elementIdToEdit: null
     }
+    activeElementId = null
+    elementIdToEdit = null
+
+    componentDidMount() {
+        console.log('did mount')
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('did update')
+    }
+    componentWillUnmount() {
+        console.log('will unmount')
+    }
+
     render() {
         return <div>
             {this.renderCurrentComponent()}
@@ -45,7 +56,7 @@ export default class ElementsList extends React.Component {
             return <AddNewElement onClose={this.closeAddForm} onAdd={this.addNewElementToList}/>
         }
         if (this.state.isItemViewMode) {
-            const element = this.state.elements.find(el => el.id === this.state.activeElementId)
+            const element = this.state.elements.find(el => el.id === this.activeElementId)
             return <ViewElement elementToView={element} onClose={this.closeViewForm}/>
         }
         if (this.state.isEditMode) {
@@ -59,8 +70,14 @@ export default class ElementsList extends React.Component {
             this.state.elements.map(el => {
             return <div key={el.id} >
         {el.name}
-                <button onClick={() => this.setState({isItemViewMode: true, activeElementId: el.id})}>View</button>
-                <button onClick={() => this.setState({isEditMode: true, elementIdToEdit: el.id})}>Edit</button>
+                <button onClick={() => {
+                    this.activeElementId = el.id
+                    this.setState({isItemViewMode: true})
+                }}>View</button>
+                <button onClick={() => {
+                    this.elementIdToEdit = el.id
+                    this.setState({isEditMode: true})
+                }}>Edit</button>
             </div>
         }):
             <p>Empty list</p>
