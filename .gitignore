@@ -2,5 +2,5 @@
 .idea/
 /.node_modules
 node_modules/
-source/img/
-source/mathOperation.js
+src/img/
+src/mathOperation.js
